@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background: rounded square, terracotta -->
+  <rect width="512" height="512" rx="110" fill="#C04A2B"/>
+  <!-- Subtle inner glow / gradient overlay -->
+  <rect width="512" height="512" rx="110" fill="url(#grad)" opacity="0.35"/>
+  <defs>
+    <radialGradient id="grad" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FAF3E7"/>
+      <stop offset="100%" stop-color="#C04A2B"/>
+    </radialGradient>
+  </defs>
+  <!-- "S" monogram in Playfair-style serif -->
+  <text
+    x="256"
+    y="375"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="340"
+    font-weight="bold"
+    font-style="italic"
+    text-anchor="middle"
+    fill="#FAF3E7"
+    opacity="0.97"
+  >S</text>
+</svg>

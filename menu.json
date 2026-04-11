@@ -1,0 +1,460 @@
+{
+  "categories": [
+    {
+      "id": "starters-salads",
+      "name": "Starters & Salads",
+      "items": [
+        {
+          "id": "caprese",
+          "name": "Caprese",
+          "description": "Fresh mozzarella, tomato, lettuce, basil, and olives for a classic, refreshing starter.",
+          "price": 139.00
+        },
+        {
+          "id": "halloumi-starter",
+          "name": "Halloumi Starter",
+          "description": "Halloumi cheese paired with avocado, olives, fresh basil, and ripe tomato for a delightful starter.",
+          "price": 149.00
+        },
+        {
+          "id": "satori-favourite",
+          "name": "Satori Favourite",
+          "description": "Greek or Italian salad with fresh basil, avocado, and tangy peppadews.",
+          "price": 165.00
+        },
+        {
+          "id": "zorba-the-greek",
+          "name": "Zorba The Greek",
+          "description": "Crisp lettuce, juicy tomato, onion, blue cheese, and bacon for a refreshing start.",
+          "price": 169.00
+        },
+        {
+          "id": "avocado-ritz",
+          "name": "Avocado Ritz",
+          "description": "Half an avocado filled with prawn cocktail.",
+          "price": 95.00
+        },
+        {
+          "id": "fegatini-di-pollo",
+          "name": "Fegatini di Pollo",
+          "description": "Spicy chicken livers served on a warm focaccia, offering a delightful blend of flavors.",
+          "price": 140.00
+        },
+        {
+          "id": "italian-salad",
+          "name": "Italian Salad",
+          "description": "Crisp lettuce, juicy tomato, onion, olives, and mozzarella cheese for a refreshing start.",
+          "price": 149.00
+        },
+        {
+          "id": "greco-salad",
+          "name": "Greco Salad",
+          "description": "Crisp lettuce, juicy tomatoes, onions, olives, and creamy feta cheese for a refreshing start.",
+          "price": 145.00
+        },
+        {
+          "id": "garlic-snails",
+          "name": "Garlic Snails",
+          "description": "Delicate snails bathed in a rich garlic butter sauce, perfect for a savory start to your meal.",
+          "price": 130.00
+        },
+        {
+          "id": "bouboulina",
+          "name": "Bouboulina",
+          "description": "Greco salad served on a medium focaccia bread, offering a delightful blend of flavors and textures.",
+          "price": 160.00
+        },
+        {
+          "id": "zorba-the-buddha",
+          "name": "Zorba the Buddha",
+          "description": "Lettuce, tomato, anchovies, capers, basil pesto, and mozzarella cheese in a refreshing salad.",
+          "price": 169.00
+        },
+        {
+          "id": "insalata-di-pollo",
+          "name": "Insalata di Pollo",
+          "description": "Lettuce, tomato, green pepper, and onion topped with savory chicken strips.",
+          "price": 159.00
+        }
+      ]
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta",
+      "items": [
+        {
+          "id": "pollo-pesto-pasta",
+          "name": "Pollo Pesto Pasta",
+          "description": "Tender chicken strips in a creamy basil pesto sauce, perfect for pasta lovers.",
+          "price": 175.00
+        },
+        {
+          "id": "bolognaise",
+          "name": "Bolognaise",
+          "description": "Lean mince enveloped in rich napolitana sauce for a classic pasta delight.",
+          "price": 220.00
+        },
+        {
+          "id": "alfredo-pasta",
+          "name": "Alfredo Pasta",
+          "description": "Ham and mushroom enveloped in a rich, creamy sauce.",
+          "price": 215.00
+        },
+        {
+          "id": "carbonara-pasta",
+          "name": "Carbonara Pasta",
+          "description": "Bacon and parmesan in a creamy egg sauce, creating a rich and savory pasta delight.",
+          "price": 169.00
+        },
+        {
+          "id": "corleone-pasta",
+          "name": "Corleone Pasta",
+          "description": "Bacon, olives, chillies, and garlic in napolitana sauce.",
+          "price": 189.00
+        },
+        {
+          "id": "napolitana-pasta",
+          "name": "Napolitana Pasta",
+          "description": "Tomato-rich pasta with olives and herbs for a classic Italian taste.",
+          "price": 150.00
+        },
+        {
+          "id": "venice-pasta",
+          "name": "Venice Pasta",
+          "description": "Chicken, bacon, peas, and mushrooms enveloped in a rich, creamy parmesan sauce.",
+          "price": 179.00
+        },
+        {
+          "id": "chourico-pasta",
+          "name": "Chouriço Pasta",
+          "description": "Portuguese chouriço in a rich napolitana sauce for a savory pasta delight.",
+          "price": 179.00
+        },
+        {
+          "id": "thearti-pasta",
+          "name": "Thearti Pasta",
+          "description": "Sundried tomatoes, basil, and olive oil tossed with pesto for a fresh, vibrant flavor.",
+          "price": 160.00
+        },
+        {
+          "id": "beef-fillet-pesto-pasta",
+          "name": "Beef Fillet Pesto Pasta",
+          "description": "Beef fillet with creamy pesto sauce, tossed with pasta and finished with parmesan cheese.",
+          "price": 185.00
+        },
+        {
+          "id": "donna-pasta",
+          "name": "Donna Pasta",
+          "description": "Chicken strips with sundried tomato, fresh basil, and a rich pesto sauce.",
+          "price": 179.00
+        },
+        {
+          "id": "capri-pasta",
+          "name": "Capri Pasta",
+          "description": "Tender veal strips and mushrooms in a rich, creamy sauce.",
+          "price": 185.00
+        },
+        {
+          "id": "fegati-pasta",
+          "name": "Fegati Pasta",
+          "description": "Chicken livers with garlic, chili, and green pepper in a creamy Napolitana sauce.",
+          "price": 175.00
+        }
+      ]
+    },
+    {
+      "id": "baked-pasta",
+      "name": "Baked Pasta",
+      "items": [
+        {
+          "id": "ravioli",
+          "name": "Ravioli",
+          "description": "Traditional beef mince in pasta served in a creamy napolitana sauce.",
+          "price": 175.00
+        },
+        {
+          "id": "lasagne",
+          "name": "Lasagne",
+          "description": "Traditional beef lasagne, baked to perfection. Please allow 25 minutes for baking.",
+          "price": 179.00
+        },
+        {
+          "id": "panzerrotti",
+          "name": "Panzerrotti",
+          "description": "Half-moon pasta filled with butternut or spinach and ricotta, served in creamy napolitana sauce.",
+          "price": 175.00
+        },
+        {
+          "id": "farfalle-satori",
+          "name": "Farfalle Satori",
+          "description": "Farfalle pasta in creamy gorgonzola and parmesan sauce, with bacon and fresh spinach.",
+          "price": 179.00
+        }
+      ]
+    },
+    {
+      "id": "classic-pizzas",
+      "name": "Classic Pizzas",
+      "items": [
+        {
+          "id": "margherita-pizza",
+          "name": "Margherita Pizza",
+          "description": "Tomato base topped with mozzarella and oregano for a classic, savory delight.",
+          "price": 135.00
+        },
+        {
+          "id": "focaccia-pizza",
+          "name": "Focaccia Pizza",
+          "description": "Herb-infused pizza base topped with aromatic garlic for a classic, savory delight.",
+          "price": 75.00
+        },
+        {
+          "id": "cheese-focaccia-pizza",
+          "name": "Cheese Focaccia Pizza",
+          "description": "Herb-infused pizza base with melted cheese.",
+          "price": 80.00
+        },
+        {
+          "id": "alyson-pizza",
+          "name": "Alyson Pizza",
+          "description": "Focaccio base with feta, basil, peppadew, and avocado.",
+          "price": 145.00
+        },
+        {
+          "id": "quattro-pizza",
+          "name": "Quattro Pizza",
+          "description": "Salami, ham, mushroom, and green pepper.",
+          "price": 145.00
+        },
+        {
+          "id": "bolognaise-pizza",
+          "name": "Bolognaise Pizza",
+          "description": "Rich bolognaise sauce layered on a classic Margherita pizza base.",
+          "price": 145.00
+        },
+        {
+          "id": "trio-pizza",
+          "name": "Trio Pizza",
+          "description": "A cheesy delight with mozzarella, cheddar, and feta, offering a trio of flavors in every bite.",
+          "price": 150.00
+        },
+        {
+          "id": "capone",
+          "name": "Capone",
+          "description": "Bacon, mushroom, chourico and chilli.",
+          "price": 155.00
+        },
+        {
+          "id": "mexicana-pizza",
+          "name": "Mexicana Pizza",
+          "description": "Mince, chili, onion, and green pepper on a classic pizza base for a spicy delight.",
+          "price": 160.00
+        },
+        {
+          "id": "vegetarian-pizza",
+          "name": "Vegetarian Pizza",
+          "description": "Mushrooms, green peppers, olives, onions, and artichokes on a classic vegetarian pizza.",
+          "price": 160.00
+        },
+        {
+          "id": "georgio-pizza",
+          "name": "Georgio Pizza",
+          "description": "Artichokes, ham, mushrooms, and olives on a classic pizza base for a savory delight.",
+          "price": 160.00
+        },
+        {
+          "id": "nicoletta-pizza",
+          "name": "Nicoletta Pizza",
+          "description": "Bacon, avocado, and feta combine for a savory and creamy pizza delight.",
+          "price": 165.00
+        },
+        {
+          "id": "spare-rib-pizza",
+          "name": "Spare Rib Pizza",
+          "description": "Margerita pizza topped with marinated spare rib meat for a savory delight.",
+          "price": 215.00
+        },
+        {
+          "id": "regina-pizza",
+          "name": "Regina Pizza",
+          "description": "Savory pizza topped with ham and mushrooms for a classic taste.",
+          "price": 199.00
+        },
+        {
+          "id": "hawaiian-pizza",
+          "name": "Hawaiian Pizza",
+          "description": "Savory ham paired with sweet pineapple on a classic pizza base for a delightful taste experience.",
+          "price": 199.00
+        }
+      ]
+    },
+    {
+      "id": "gourmet-pizzas",
+      "name": "Gourmet Pizzas",
+      "items": [
+        {
+          "id": "toto",
+          "name": "Toto",
+          "description": "Salami, pear, and blue cheese combine for a unique and savory gourmet pizza experience.",
+          "price": 149.00
+        },
+        {
+          "id": "beira",
+          "name": "Beira",
+          "description": "Salami, olives, and feta combine for a savory delight.",
+          "price": 155.00
+        },
+        {
+          "id": "plata",
+          "name": "Plata",
+          "description": "Bacon, sundried tomato, halloumi, and olives.",
+          "price": 155.00
+        },
+        {
+          "id": "4th-ave-pizza",
+          "name": "4th Ave Pizza",
+          "description": "Margerita base with balsamic glazed sirloin slices and rocket.",
+          "price": 155.00
+        },
+        {
+          "id": "pandas-special",
+          "name": "Pandas Special",
+          "description": "Focaccia with feta, blue cheese, capers, rocket, avocado, and balsamic caramelized onions.",
+          "price": 160.00
+        },
+        {
+          "id": "mona-lisa",
+          "name": "Mona Lisa",
+          "description": "Salami, ham, mushrooms, pineapple, and garlic come together for a savory and sweet pizza delight.",
+          "price": 160.00
+        },
+        {
+          "id": "leonardo",
+          "name": "Leonardo",
+          "description": "Sundried tomatoes, artichokes, mushrooms, and olives on a gourmet pizza.",
+          "price": 160.00
+        },
+        {
+          "id": "tuscan",
+          "name": "Tuscan",
+          "description": "Bacon, feta, chouriço, olives, and peppadews create a savory and tangy flavor combination.",
+          "price": 165.00
+        },
+        {
+          "id": "mamma-mia",
+          "name": "Mamma Mia",
+          "description": "Salami, peppadew, feta, avocado, and tomato come together for a delightful gourmet pizza experience.",
+          "price": 165.00
+        },
+        {
+          "id": "carnivore",
+          "name": "Carnivore",
+          "description": "A savory blend of ham, salami, and bacon for a meat lover's delight.",
+          "price": 165.00
+        },
+        {
+          "id": "gambini",
+          "name": "Gambini",
+          "description": "Chicken, bacon, peppadews, and avocado combine for a savory and tangy delight.",
+          "price": 165.00
+        },
+        {
+          "id": "mediterranean",
+          "name": "Mediterranean",
+          "description": "Chouriço, feta, artichokes, olives, peppadew, and sundried tomato on a gourmet pizza.",
+          "price": 165.00
+        },
+        {
+          "id": "lloyd-special",
+          "name": "Lloyd Special",
+          "description": "Chicken, chili, onion, and avocado come together for a zesty and fresh flavor combination.",
+          "price": 165.00
+        },
+        {
+          "id": "satori-special",
+          "name": "Satori Special",
+          "description": "Mushrooms, artichokes, salami, ham, olives, halloumi, and green pepper on a gourmet pizza.",
+          "price": 175.00
+        },
+        {
+          "id": "four-seasons",
+          "name": "Four Seasons",
+          "description": "Quarter Hawaiian, Nicoletta, Regina, and Mexicana pizza slices in one delightful combination.",
+          "price": 175.00
+        }
+      ]
+    },
+    {
+      "id": "beverages",
+      "name": "Beverages",
+      "items": [
+        {
+          "id": "soft-drinks",
+          "name": "Soft Drinks",
+          "description": "Coke, Coke Light, Sprite, Fanta. Can.",
+          "price": 32.00
+        },
+        {
+          "id": "tiser",
+          "name": "Tiser",
+          "description": "Appletiser.",
+          "price": 40.00
+        },
+        {
+          "id": "water",
+          "name": "Still Water",
+          "description": "Still mineral water.",
+          "price": 30.00
+        },
+        {
+          "id": "200ml-lemonade",
+          "name": "200ml Lemonade",
+          "description": "200ml Lemonade.",
+          "price": 25.00
+        },
+        {
+          "id": "200ml-dry-lemon",
+          "name": "200ml Dry Lemon",
+          "description": "200ml Dry Lemon.",
+          "price": 25.00
+        },
+        {
+          "id": "200ml-ginger-ale",
+          "name": "200ml Ginger Ale",
+          "description": "200ml Ginger Ale.",
+          "price": 25.00
+        },
+        {
+          "id": "200ml-soda-water",
+          "name": "200ml Soda Water",
+          "description": "200ml Soda Water.",
+          "price": 25.00
+        }
+      ]
+    },
+    {
+      "id": "family-combos",
+      "name": "Family Combos",
+      "items": [
+        {
+          "id": "family-bolognaise-combo",
+          "name": "Family Bolognaise Combo",
+          "description": "4 Spaghetti Bolognaise and a Large Garlic Foccacio.",
+          "price": 450.00
+        },
+        {
+          "id": "combo-pizza-deal",
+          "name": "Combo Pizza Deal",
+          "description": "Enjoy a variety of large pizzas: Regina, Hawaiian, Margherita, and La Nona.",
+          "price": 600.00
+        },
+        {
+          "id": "combo-lasagne-deal",
+          "name": "Combo Lasagne Deal",
+          "description": "Beef lasagne for 4-6 with a refreshing Greek salad on the side.",
+          "price": 560.00
+        }
+      ]
+    }
+  ]
+}
