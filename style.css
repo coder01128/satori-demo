@@ -203,8 +203,23 @@ input, textarea, select {
   pointer-events: none;
 }
 
-/* Text band below the photo */
+/* =============================================================
+   GINGHAM UTILITY
+   ============================================================= */
+.gingham,
+.gingham-band::before,
+.gingham-band::after {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+}
+
+/* Text band below the photo — gingham strip sits at top via ::before */
 .hero-body {
+  position: relative;
   background: var(--terracotta);
   color: var(--cream);
   text-align: center;
@@ -213,6 +228,23 @@ input, textarea, select {
   flex-direction: column;
   align-items: center;
   gap: 0.85rem;
+}
+
+/* Gingham strip at the very top of the hero text band */
+.hero-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  opacity: 0.85;
 }
 
 .hero-eyebrow {
@@ -424,9 +456,20 @@ input, textarea, select {
   font-family: var(--font-serif);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--charcoal);
-  padding: 1.25rem 1.25rem 0.75rem;
-  border-top: 1.5px solid var(--cream-border);
+  color: var(--white);
+  padding: 0.875rem 1.25rem;
+  /* Gingham tablecloth strip behind category title */
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+  border-top: none;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
 }
 
 /* ── Menu Items Grid (Card Layout) ─────────────────────────── */
@@ -1053,6 +1096,25 @@ input, textarea, select {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  position: relative;
+}
+
+/* Gingham strip at the very top of the footer/about section */
+.about-section::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  opacity: 0.85;
 }
 
 .about-photo-wrap {
@@ -1176,6 +1238,25 @@ input, textarea, select {
   background: var(--charcoal);
   padding: 1.5rem;
   text-align: center;
+  position: relative;
+}
+
+/* Gingham strip at the top of the minimal site footer (landing page) */
+.site-footer::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
+    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  opacity: 0.85;
 }
 
 /* =============================================================
@@ -1563,7 +1644,7 @@ input, textarea, select {
   }
 
   .menu-category-heading {
-    padding: 1.5rem 2rem 0.75rem;
+    padding: 0.875rem 2rem;
     font-size: 1.35rem;
   }
 
