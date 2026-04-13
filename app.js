@@ -273,23 +273,19 @@ function renderCartDrawer() {
    ───────────────────────────────────────────────────────────── */
 function showScreen(name) {
   const menuSection = document.getElementById('menu');
-  const aboutSection = document.getElementById('about');
 
   elCheckout.classList.remove('screen-visible');
   elConfirmation.classList.remove('screen-visible');
-  if (menuSection)  menuSection.style.display  = '';
-  if (aboutSection) aboutSection.style.display = '';
+  if (menuSection) menuSection.style.display = '';
 
   if (name === 'checkout') {
-    if (menuSection)  menuSection.style.display  = 'none';
-    if (aboutSection) aboutSection.style.display = 'none';
+    if (menuSection) menuSection.style.display = 'none';
     elCheckout.classList.add('screen-visible');
     window.scrollTo(0, 0);
     syncCheckoutTotal();
     renderCheckoutSummary();
   } else if (name === 'confirmation') {
-    if (menuSection)  menuSection.style.display  = 'none';
-    if (aboutSection) aboutSection.style.display = 'none';
+    if (menuSection) menuSection.style.display = 'none';
     elConfirmation.classList.add('screen-visible');
     elOrderNumber.textContent = 'Order #SAT-' + (Math.floor(1000 + Math.random() * 9000));
     buildWhatsAppOrder();
