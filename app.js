@@ -635,15 +635,18 @@ function initMenuImages() {
 
     img.onload = () => {
       // Paint the loaded image as a CSS background on the .card-media div.
-      // A div's background is always exactly the size of the div — no
-      // img element sizing quirks possible.
+      // Set size/position inline so they work regardless of which CSS
+      // version the browser has cached.
       const mediaDiv = img.parentElement;
       if (mediaDiv) {
-        mediaDiv.style.backgroundImage = "url('" + url + "')";
+        mediaDiv.style.backgroundImage    = "url('" + url + "')";
+        mediaDiv.style.backgroundSize     = 'cover';
+        mediaDiv.style.backgroundPosition = 'center';
+        mediaDiv.style.backgroundRepeat   = 'no-repeat';
         const placeholder = mediaDiv.querySelector('.card-media-placeholder');
         if (placeholder) placeholder.style.display = 'none';
       }
-      img.style.display = 'none'; // hide the <img> — background handles display
+      img.style.display = 'none';
     };
 
     img.onerror = () => {
