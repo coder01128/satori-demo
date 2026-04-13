@@ -117,6 +117,45 @@
   </aside>
 
   <!-- ============================================================
+       ITEM DETAIL MODAL
+  ============================================================ -->
+  <div id="item-modal-overlay" class="item-modal-overlay" aria-hidden="true"></div>
+
+  <div id="item-modal" class="item-modal" role="dialog" aria-modal="true" aria-labelledby="item-modal-name" hidden>
+    <button id="item-modal-close" class="item-modal-close" aria-label="Close">✕</button>
+
+    <div class="item-modal-media">
+      <div id="item-modal-placeholder" class="item-modal-placeholder">
+        <span id="item-modal-emoji" class="item-modal-emoji" aria-hidden="true"></span>
+      </div>
+      <img id="item-modal-img" class="item-modal-img" src="" alt="" loading="eager">
+    </div>
+
+    <div class="item-modal-body">
+      <div>
+        <h3 id="item-modal-name" class="item-modal-name"></h3>
+        <p id="item-modal-desc" class="item-modal-desc"></p>
+      </div>
+      <p id="item-modal-price" class="item-modal-price"></p>
+
+      <div class="item-modal-qty-row">
+        <span class="item-modal-qty-label">Quantity</span>
+        <div id="item-modal-qty"></div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:0">
+        <label class="form-label" for="modal-instructions">
+          Special Instructions <span class="form-optional">(optional)</span>
+        </label>
+        <textarea class="form-input form-textarea" id="modal-instructions"
+                  rows="3" placeholder="Allergies, extra toppings, no onions…"></textarea>
+      </div>
+
+      <button id="item-modal-done" class="btn btn-primary btn-full">Done</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
        CHECKOUT
   ============================================================ -->
   <section id="checkout" class="checkout-section" hidden>
@@ -136,7 +175,23 @@
         <input class="form-input" type="tel" id="field-phone" name="phone"
                placeholder="e.g. 083 123 4567" autocomplete="tel" required>
       </div>
-      <div class="form-group">
+      <fieldset class="payment-fieldset">
+        <legend class="payment-legend">Order Type</legend>
+        <div class="payment-tiles">
+          <label class="payment-tile">
+            <input type="radio" name="fulfillment" value="deliver" id="fulfillment-deliver" checked>
+            <span class="tile-icon" aria-hidden="true">🚗</span>
+            <span class="tile-label">Deliver</span>
+          </label>
+          <label class="payment-tile">
+            <input type="radio" name="fulfillment" value="collect" id="fulfillment-collect">
+            <span class="tile-icon" aria-hidden="true">🏪</span>
+            <span class="tile-label">Collect in store</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div id="address-field-group" class="form-group">
         <label class="form-label" for="field-address">Delivery Address</label>
         <input class="form-input" type="text" id="field-address" name="address"
                placeholder="Street address, suburb" autocomplete="street-address" required>
