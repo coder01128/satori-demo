@@ -461,10 +461,11 @@ input, textarea, select {
   /* Gingham tablecloth strip behind category title */
   background-color: #ffffff;
   background-image:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
     linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
     linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
-  background-size: 40px 40px;
-  background-position: 0 0, 20px 20px;
+  background-size: cover, 40px 40px, 40px 40px;
+  background-position: 0 0, 0 0, 20px 20px;
   text-shadow: 0 1px 4px rgba(0,0,0,0.55);
   border-top: none;
   min-height: 50px;
