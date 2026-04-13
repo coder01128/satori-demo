@@ -631,15 +631,26 @@ function initMenuImages() {
   elMenuContainer.querySelectorAll('.card-media-img').forEach(img => {
     const slug = img.dataset.itemSlug;
     if (!slug) return;
-    img.src = 'assets/menu/' + slug + '.jpg';
+    const url = 'assets/menu/' + slug + '.jpg';
+
     img.onload = () => {
-      // Hide the gradient placeholder once a real image loads
-      const placeholder = img.previousElementSibling;
-      if (placeholder) placeholder.style.display = 'none';
+      // Paint the loaded image as a CSS background on the .card-media div.
+      // A div's background is always exactly the size of the div — no
+      // img element sizing quirks possible.
+      const mediaDiv = img.parentElement;
+      if (mediaDiv) {
+        mediaDiv.style.backgroundImage = "url('" + url + "')";
+        const placeholder = mediaDiv.querySelector('.card-media-placeholder');
+        if (placeholder) placeholder.style.display = 'none';
+      }
+      img.style.display = 'none'; // hide the <img> — background handles display
     };
+
     img.onerror = () => {
-      img.classList.add('img-error');
+      img.classList.add('img-error'); // placeholder gradient + emoji stays visible
     };
+
+    img.src = url;
   });
 }
 

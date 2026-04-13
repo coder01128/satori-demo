@@ -506,7 +506,10 @@ input, textarea, select {
   height: 160px;
   overflow: hidden;
   flex-shrink: 0;
-  background: var(--white);
+  background-color: var(--white);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card-media-placeholder {
