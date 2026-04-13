@@ -484,9 +484,20 @@ function closeItemModal() {
   }, 380);
 }
 
+function buildModalQtyHtml(itemId) {
+  const qty = cart[itemId] ? cart[itemId].qty : 0;
+  return `
+    <div class="qty-stepper">
+      <button class="qty-btn" data-action="decrease" data-item-id="${itemId}" aria-label="Remove one">−</button>
+      <span class="qty-value">${qty}</span>
+      <button class="qty-btn" data-action="increase" data-item-id="${itemId}" aria-label="Add one">+</button>
+    </div>
+  `;
+}
+
 function updateModalQty() {
   const el = document.getElementById('item-modal-qty');
-  if (el && modalItemId) el.innerHTML = buildControlHtml(modalItemId);
+  if (el && modalItemId) el.innerHTML = buildModalQtyHtml(modalItemId);
 }
 
 function setupModalEvents() {
