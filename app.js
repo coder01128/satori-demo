@@ -7,8 +7,9 @@
 'use strict';
 
 /* ── State ──────────────────────────────────────────────────── */
-// cart: { [itemId]: { id, name, price, qty } }
+// cart: { [itemId]: { id, name, price, qty, notes } }
 let cart = {};
+let modalItemId = null; // currently open item in the detail modal
 
 /* ── DOM references (populated after DOMContentLoaded) ──────── */
 let elCartBadge, elCartCount, elCartTotalBadge;
@@ -17,6 +18,7 @@ let elCartSubtotal, elCartTotal;
 let elCheckout, elCheckoutForm, elOrderTotalLabel;
 let elConfirmation, elOrderNumber;
 let elCategoryTabs, elMenuContainer;
+let elItemModal, elItemModalOverlay;
 
 /* ─────────────────────────────────────────────────────────────
    SESSION STORAGE — cart persists while browser tab is open
@@ -160,13 +162,20 @@ function findItem(itemId) {
   return null;
 }
 
+function findCategory(itemId) {
+  for (const cat of MENU_DATA.categories) {
+    if (cat.items.some(i => i.id === itemId)) return cat;
+  }
+  return null;
+}
+
 function addToCart(itemId) {
   const item = findItem(itemId);
   if (!item) return;
   if (cart[itemId]) {
     cart[itemId].qty += 1;
   } else {
-    cart[itemId] = { id: item.id, name: item.name, price: item.price, qty: 1 };
+    cart[itemId] = { id: item.id, name: item.name, price: item.price, qty: 1, notes: '' };
   }
   saveCart();
   refreshItemControl(itemId);
@@ -326,28 +335,35 @@ function buildWhatsAppOrder() {
     return;
   }
 
-  // Build item list
+  // Build item list (include per-item special instructions)
   const itemLines = lines.map(line => {
     const lineTotal = (line.price * line.qty).toFixed(0);
-    return `• ${line.qty}x ${line.name} — R${lineTotal}`;
+    let text = `• ${line.qty}x ${line.name} — R${lineTotal}`;
+    if (line.notes) text += `\n  (${line.notes})`;
+    return text;
   }).join('\n');
 
   const subtotal = lines.reduce((sum, l) => sum + l.price * l.qty, 0);
+  const isCollect = formData.fulfillment === 'collect';
 
-  const msg = [
+  const parts = [
     "Hi Satori! I'd like to place an order:",
     '',
     itemLines,
     '',
     `Subtotal: R${subtotal.toFixed(0)}`,
     '',
-    `Name: ${formData.name || 'Not provided'}`,
-    `Phone: ${formData.phone || 'Not provided'}`,
-    `Address: ${formData.address || 'Not provided'}`,
-    `Notes: ${formData.notes || 'None'}`,
-    '',
-    'Sent from satori.co.za'
-  ].join('\n');
+    `Order type: ${isCollect ? 'Collect in store' : 'Deliver'}`,
+  ];
+  if (!isCollect) parts.push(`Address: ${formData.address || 'Not provided'}`);
+  parts.push('');
+  parts.push(`Name: ${formData.name || 'Not provided'}`);
+  parts.push(`Phone: ${formData.phone || 'Not provided'}`);
+  if (formData.notes) parts.push(`Order notes: ${formData.notes}`);
+  parts.push('');
+  parts.push('Sent from satori.co.za');
+
+  const msg = parts.join('\n');
 
   btn.href = 'https://wa.me/27118887452?text=' + encodeURIComponent(msg);
   btn.style.display = 'inline-flex';
@@ -396,17 +412,126 @@ function scrollToCategory(catId) {
 }
 
 /* ─────────────────────────────────────────────────────────────
+   ITEM DETAIL MODAL
+   ───────────────────────────────────────────────────────────── */
+const CAT_GRADIENTS = {
+  'starters-salads': 'linear-gradient(135deg, #3D5A2C 0%, #6A8F40 100%)',
+  'pasta':           'linear-gradient(135deg, #8B6014 0%, #C49A30 100%)',
+  'baked-pasta':     'linear-gradient(135deg, #7A5010 0%, #B08820 100%)',
+  'classic-pizzas':  'linear-gradient(135deg, #C04A2B 0%, #E07850 100%)',
+  'gourmet-pizzas':  'linear-gradient(135deg, #8B2D1A 0%, #C04A2B 100%)',
+  'beverages':       'linear-gradient(135deg, #1A5276 0%, #2E86C1 100%)',
+  'family-combos':   'linear-gradient(135deg, #5D4037 0%, #8D6E63 100%)',
+};
+
+function openItemModal(itemId) {
+  const item = findItem(itemId);
+  const cat  = findCategory(itemId);
+  if (!item || !cat) return;
+
+  modalItemId = itemId;
+
+  // ── Populate media
+  const placeholder = document.getElementById('item-modal-placeholder');
+  const img         = document.getElementById('item-modal-img');
+  const emoji       = document.getElementById('item-modal-emoji');
+  const style       = CATEGORY_STYLES[cat.id] || { emoji: '🍽️' };
+
+  placeholder.style.background = CAT_GRADIENTS[cat.id] || '#F0E6D2';
+  placeholder.style.display    = '';
+  emoji.textContent = style.emoji;
+
+  img.classList.remove('img-error');
+  img.alt = item.name;
+  img.src = '';
+  img.src = 'assets/menu/' + item.id + '.jpg';
+  img.onload  = () => { placeholder.style.display = 'none'; };
+  img.onerror = () => { img.classList.add('img-error'); placeholder.style.display = ''; };
+
+  // ── Populate text
+  document.getElementById('item-modal-name').textContent  = item.name;
+  document.getElementById('item-modal-desc').textContent  = item.description;
+  document.getElementById('item-modal-price').textContent = formatRand(item.price);
+
+  // ── Restore saved notes for this item
+  document.getElementById('modal-instructions').value =
+    (cart[itemId] && cart[itemId].notes) ? cart[itemId].notes : '';
+
+  // ── Render qty control
+  updateModalQty();
+
+  // ── Open
+  elItemModalOverlay.classList.add('is-visible');
+  elItemModal.removeAttribute('hidden');
+  // Double rAF: let browser paint initial off-screen position before transitioning
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    elItemModal.classList.add('is-open');
+  }));
+  document.body.style.overflow = 'hidden';
+}
+
+function closeItemModal() {
+  // Save special instructions if item is still in cart
+  if (modalItemId && cart[modalItemId]) {
+    const notes = document.getElementById('modal-instructions').value.trim();
+    cart[modalItemId].notes = notes;
+    saveCart();
+  }
+
+  elItemModal.classList.remove('is-open');
+  elItemModalOverlay.classList.remove('is-visible');
+  document.body.style.overflow = '';
+
+  setTimeout(() => {
+    elItemModal.setAttribute('hidden', '');
+    modalItemId = null;
+  }, 380);
+}
+
+function updateModalQty() {
+  const el = document.getElementById('item-modal-qty');
+  if (el && modalItemId) el.innerHTML = buildControlHtml(modalItemId);
+}
+
+function setupModalEvents() {
+  document.getElementById('item-modal-close').addEventListener('click', closeItemModal);
+  elItemModalOverlay.addEventListener('click', closeItemModal);
+
+  // Qty controls inside modal
+  document.getElementById('item-modal-qty').addEventListener('click', e => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn || !modalItemId) return;
+    const action = btn.dataset.action;
+    if (action === 'add')      addToCart(modalItemId);
+    else if (action === 'increase') adjustQty(modalItemId, 1);
+    else if (action === 'decrease') adjustQty(modalItemId, -1);
+    updateModalQty();
+  });
+
+  // Done button — saves notes and closes
+  document.getElementById('item-modal-done').addEventListener('click', closeItemModal);
+}
+
+/* ─────────────────────────────────────────────────────────────
    EVENT DELEGATION
    ───────────────────────────────────────────────────────────── */
 function setupMenuEvents() {
   elMenuContainer.addEventListener('click', e => {
+    // Handle qty/add button clicks first
     const btn = e.target.closest('[data-action]');
-    if (!btn) return;
-    const action = btn.dataset.action;
-    const itemId = btn.dataset.itemId;
-    if (action === 'add')      addToCart(itemId);
-    if (action === 'increase') { cart[itemId] ? adjustQty(itemId, 1) : addToCart(itemId); }
-    if (action === 'decrease') adjustQty(itemId, -1);
+    if (btn) {
+      const action = btn.dataset.action;
+      const itemId = btn.dataset.itemId;
+      if (action === 'add')      addToCart(itemId);
+      if (action === 'increase') { cart[itemId] ? adjustQty(itemId, 1) : addToCart(itemId); }
+      if (action === 'decrease') adjustQty(itemId, -1);
+      return; // don't open modal when a button was clicked
+    }
+    // Click anywhere else on the card → open item detail modal
+    const card = e.target.closest('.menu-card');
+    if (card && card.dataset.itemId) {
+      openItemModal(card.dataset.itemId);
+    }
   });
 }
 
@@ -436,14 +561,30 @@ function setupCartEvents() {
 function setupCheckoutEvents() {
   document.getElementById('btn-back-to-menu').addEventListener('click', () => showScreen('menu'));
 
+  // ── Deliver / Collect toggle
+  const addressGroup = document.getElementById('address-field-group');
+  const addressInput = document.getElementById('field-address');
+  document.querySelectorAll('input[name="fulfillment"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isDeliver = document.querySelector('input[name="fulfillment"]:checked')?.value === 'deliver';
+      if (addressGroup) {
+        addressGroup.style.display = isDeliver ? '' : 'none';
+        addressInput.required = isDeliver;
+        if (!isDeliver) addressInput.value = '';
+      }
+    });
+  });
+
   elCheckoutForm.addEventListener('submit', e => {
     e.preventDefault();
+    const fulfillment = document.querySelector('input[name="fulfillment"]:checked')?.value || 'deliver';
     // Save form data before clearing cart so confirmation can use it
     const formData = {
-      name:    document.getElementById('field-name').value.trim(),
-      phone:   document.getElementById('field-phone').value.trim(),
-      address: document.getElementById('field-address').value.trim(),
-      notes:   document.getElementById('field-notes').value.trim()
+      name:        document.getElementById('field-name').value.trim(),
+      phone:       document.getElementById('field-phone').value.trim(),
+      address:     document.getElementById('field-address').value.trim(),
+      notes:       document.getElementById('field-notes').value.trim(),
+      fulfillment,
     };
     try { sessionStorage.setItem('satori_form', JSON.stringify(formData)); } catch(_) {}
 
@@ -484,6 +625,11 @@ function initMenuImages() {
     const slug = img.dataset.itemSlug;
     if (!slug) return;
     img.src = 'assets/menu/' + slug + '.jpg';
+    img.onload = () => {
+      // Hide the gradient placeholder once a real image loads
+      const placeholder = img.previousElementSibling;
+      if (placeholder) placeholder.style.display = 'none';
+    };
     img.onerror = () => {
       img.classList.add('img-error');
     };
@@ -596,6 +742,8 @@ function init() {
   elOrderNumber     = document.getElementById('order-number');
   elCategoryTabs    = document.getElementById('category-tabs');
   elMenuContainer   = document.getElementById('menu-container');
+  elItemModal       = document.getElementById('item-modal');
+  elItemModalOverlay = document.getElementById('item-modal-overlay');
 
   renderMenu();
   initMenuImages();
@@ -604,6 +752,7 @@ function init() {
   setupCartEvents();
   setupCheckoutEvents();
   setupConfirmationEvents();
+  setupModalEvents();
   initInstallBanner();
   registerServiceWorker();
 }
