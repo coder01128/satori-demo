@@ -178,17 +178,13 @@ input, textarea, select {
 .hero-photo {
   display: block;
   width: 100%;
-  height: clamp(240px, 55vw, 500px);
-  overflow: hidden;
   position: relative;
 }
 
 .hero-photo-img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 35%;
+  height: auto;
 }
 
 /* Soft bottom fade on photo for visual cohesion */
@@ -1755,10 +1751,6 @@ input, textarea, select {
 @media (min-width: 768px) {
 
   /* Hero (stacked layout) */
-  .hero-photo {
-    height: clamp(320px, 45vw, 560px);
-  }
-
   .hero-title {
     font-size: clamp(4.5rem, 10vw, 7rem);
   }
