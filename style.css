@@ -456,19 +456,11 @@ input, textarea, select {
   font-family: var(--font-serif);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--text-body);
   padding: 0.875rem 1.25rem;
-  /* Gingham tablecloth strip behind category title */
-  background-color: #ffffff;
-  background-image:
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%),
-    linear-gradient(45deg, #B83A2E 25%, transparent 25%, transparent 75%, #B83A2E 75%);
-  background-size: cover, 40px 40px, 40px 40px;
-  background-position: 0 0, 0 0, 20px 20px;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.55);
-  border-top: none;
-  min-height: 50px;
+  background: var(--cream-dark);
+  border-top: 2px solid var(--cream-border);
+  min-height: unset;
   display: flex;
   align-items: center;
 }

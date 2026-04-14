@@ -640,7 +640,7 @@ function initMenuImages() {
       const mediaDiv = img.parentElement;
       if (mediaDiv) {
         mediaDiv.style.backgroundImage    = "url('" + url + "')";
-        mediaDiv.style.backgroundSize     = 'cover';
+        mediaDiv.style.backgroundSize     = 'contain';
         mediaDiv.style.backgroundPosition = 'center';
         mediaDiv.style.backgroundRepeat   = 'no-repeat';
         const placeholder = mediaDiv.querySelector('.card-media-placeholder');
