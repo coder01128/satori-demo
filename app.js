@@ -361,7 +361,7 @@ function buildWhatsAppOrder() {
 
   const msg = parts.join('\n');
 
-  btn.href = 'https://wa.me/27118887452?text=' + encodeURIComponent(msg);
+  btn.href = 'https://wa.me/27822279048?text=' + encodeURIComponent(msg);
   btn.style.display = 'inline-flex';
 }
 
