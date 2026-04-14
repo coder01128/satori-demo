@@ -509,9 +509,12 @@ function setupModalEvents() {
     const btn = e.target.closest('[data-action]');
     if (!btn || !modalItemId) return;
     const action = btn.dataset.action;
-    if (action === 'add')      addToCart(modalItemId);
-    else if (action === 'increase') adjustQty(modalItemId, 1);
-    else if (action === 'decrease') adjustQty(modalItemId, -1);
+    if (action === 'increase') {
+      if (cart[modalItemId]) adjustQty(modalItemId, 1);
+      else addToCart(modalItemId);
+    } else if (action === 'decrease') {
+      adjustQty(modalItemId, -1);
+    }
     updateModalQty();
   });
 
