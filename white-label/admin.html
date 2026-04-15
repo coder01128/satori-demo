@@ -629,10 +629,14 @@ async function runExtraction() {
       throw new Error('Claude did not return a valid MENU_DATA constant. Try again or use a clearer menu file.');
     }
 
-    // Parse the MENU_DATA object
+    // Extract the raw JSON object from the MENU_DATA declaration and parse it
+    // (avoids eval/Function issues with backticks or other special chars)
     let menuObj;
     try {
-      menuObj = new Function(js + '; return MENU_DATA;')();
+      const start = js.indexOf('{');
+      const end   = js.lastIndexOf('}');
+      if (start === -1 || end === -1) throw new Error('No JSON object found in output.');
+      menuObj = JSON.parse(js.slice(start, end + 1));
     } catch (parseErr) {
       throw new Error('Could not parse extracted menu: ' + parseErr.message);
     }
