@@ -1,0 +1,12 @@
+{
+  "name": "restaurant-pwa-menu-importer",
+  "version": "1.0.0",
+  "description": "CLI tool to extract menu data from PDFs or images using Claude AI.",
+  "type": "module",
+  "scripts": {
+    "import": "node import-menu.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}
