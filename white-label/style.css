@@ -1268,6 +1268,7 @@ input, textarea, select {
   background: var(--cream-dark);
   border-top: 1.5px solid var(--cream-border);
   padding: 3rem 1.5rem;
+  text-align: center;
 }
 
 .contact-inner {
@@ -1281,14 +1282,16 @@ input, textarea, select {
 
 .contact-grid {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
 .contact-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
 }
 
