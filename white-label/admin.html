@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import Menu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="config.js"></script>
+  <script>
+    (function () {
+      if (typeof CONFIG === 'undefined') return;
+      function set(k, v) { document.documentElement.style.setProperty(k, v); }
+      const c = CONFIG.colors || {};
+      if (c.primary)     set('--terracotta',      c.primary);
+      if (c.primaryDark) set('--terracotta-dark',  c.primaryDark);
+      if (c.cream)       set('--cream',            c.cream);
+      if (c.creamDark)   set('--cream-dark',       c.creamDark);
+      if (c.creamBorder) set('--cream-border',     c.creamBorder);
+      if (c.charcoal)    set('--charcoal',         c.charcoal);
+      if (c.textBody)    set('--text-body',        c.textBody);
+      if (c.textMuted)   set('--text-muted',       c.textMuted);
+    })();
+  </script>
+
+  <style>
+    /* ── Admin-specific layout ─────────────────────────────────── */
+    .admin-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    .admin-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+    .admin-back:hover { color: var(--terracotta); }
+
+    .admin-title {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .admin-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    /* ── Steps ─────────────────────────────────────────────────── */
+    .admin-step {
+      background: var(--white);
+      border: 1px solid var(--cream-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .admin-step-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 8px;
+    }
+    .admin-step h2 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--charcoal);
+      margin-bottom: 14px;
+    }
+    .admin-step p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* ── Key input ─────────────────────────────────────────────── */
+    .key-row {
+      display: flex;
+      gap: 10px;
+    }
+    .key-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid var(--cream-border);
+      border-radius: var(--radius-sm);
+      background: var(--cream);
+      color: var(--charcoal);
+      font-size: 0.875rem;
+      transition: border-color 0.15s;
+    }
+    .key-row input:focus {
+      outline: none;
+      border-color: var(--terracotta);
+    }
+    .key-row button {
+      padding: 10px 18px;
+      background: var(--terracotta);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .key-row button:hover { background: var(--terracotta-dark); }
+    .key-saved {
+      font-size: 0.8rem;
+      color: #3D8B4A;
+      margin-top: 6px;
+      display: none;
+    }
+
+    /* ── Drop zone ─────────────────────────────────────────────── */
+    .drop-zone {
+      border: 2px dashed var(--cream-border);
+      border-radius: var(--radius);
+      padding: 40px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+      border-color: var(--terracotta);
+      background: rgba(192,74,43,0.04);
+    }
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .drop-zone-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    .drop-zone-text {
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+    .drop-zone-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .drop-zone-file {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--terracotta);
+      display: none;
+    }
+
+    /* ── Extract button ────────────────────────────────────────── */
+    .extract-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--terracotta);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 16px;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .extract-btn:hover:not(:disabled) { background: var(--terracotta-dark); }
+    .extract-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── Progress / output ─────────────────────────────────────── */
+    .progress-section { display: none; }
+    .progress-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .progress-label strong { color: var(--terracotta); }
+    .output-box {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      line-height: 1.6;
+      max-height: 320px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* ── Success ───────────────────────────────────────────────── */
+    .success-section {
+      display: none;
+      background: #F0FAF2;
+      border: 1.5px solid #A8D5B0;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .success-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .success-section h2 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: #1E5C2A;
+      margin-bottom: 8px;
+    }
+    .success-section p {
+      font-size: 0.875rem;
+      color: #4A8A55;
+      margin-bottom: 20px;
+    }
+    .success-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 11px 24px;
+      background: var(--terracotta);
+      color: var(--white);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .btn-secondary {
+      padding: 11px 24px;
+      border: 1.5px solid var(--cream-border);
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text-body);
+    }
+
+    /* ── Error ─────────────────────────────────────────────────── */
+    .error-box {
+      display: none;
+      background: #FDF0EE;
+      border: 1.5px solid #E8B4AC;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 0.875rem;
+      color: #8B2D1A;
+      margin-top: 12px;
+    }
+
+    /* ── Already imported notice ───────────────────────────────── */
+    .imported-notice {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: var(--cream-dark);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .imported-notice strong { color: var(--charcoal); }
+    .imported-notice button {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--terracotta);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-wrap">
+
+  <a class="admin-back" href="menu.html">← Back to menu</a>
+
+  <h1 class="admin-title">Import Menu</h1>
+  <p class="admin-subtitle">
+    Upload a PDF, photo, or text file of your menu — Claude will extract
+    every item and price automatically.
+  </p>
+
+  <!-- Existing import notice -->
+  <div class="imported-notice" id="imported-notice">
+    <span>✅ <strong id="imported-count"></strong> categories already imported.</span>
+    <button onclick="clearImported()">Clear &amp; start over</button>
+  </div>
+
+  <!-- Step 1: API Key -->
+  <div class="admin-step">
+    <div class="admin-step-label">Step 1</div>
+    <h2>Anthropic API Key</h2>
+    <div class="key-row">
+      <input type="password" id="api-key-input" placeholder="sk-ant-…" autocomplete="off" spellcheck="false">
+      <button onclick="saveKey()">Save</button>
+    </div>
+    <div class="key-saved" id="key-saved">✓ Key saved in browser</div>
+    <p>Stored only in your browser's localStorage. Only sent to api.anthropic.com.</p>
+  </div>
+
+  <!-- Step 2: Upload -->
+  <div class="admin-step">
+    <div class="admin-step-label">Step 2</div>
+    <h2>Upload your menu</h2>
+    <div class="drop-zone" id="drop-zone"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave(event)"
+         ondrop="onDrop(event)">
+      <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif,.txt,.md" onchange="onFileChange(event)">
+      <div class="drop-zone-icon">📄</div>
+      <div class="drop-zone-text">Drag &amp; drop or click to choose</div>
+      <div class="drop-zone-hint">PDF · JPG · PNG · WebP · GIF · TXT</div>
+      <div class="drop-zone-file" id="file-name"></div>
+    </div>
+
+    <div class="error-box" id="error-box"></div>
+
+    <button class="extract-btn" id="extract-btn" disabled onclick="runExtraction()">
+      Extract Menu with Claude
+    </button>
+  </div>
+
+  <!-- Progress -->
+  <div class="admin-step progress-section" id="progress-section">
+    <div class="admin-step-label">Step 3</div>
+    <h2>Extracting…</h2>
+    <div class="progress-label">Claude is reading your menu. <strong id="token-count">0</strong> characters extracted so far.</div>
+    <div class="output-box" id="output-box"></div>
+  </div>
+
+  <!-- Success -->
+  <div class="success-section" id="success-section">
+    <div class="success-icon">🎉</div>
+    <h2>Menu imported!</h2>
+    <p id="success-msg"></p>
+    <div class="success-btns">
+      <a class="btn-primary" href="menu.html">View Menu →</a>
+      <button class="btn-secondary" onclick="resetForm()">Import another</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ================================================================
+   admin.js — inline script for admin.html
+   Calls Anthropic API directly from the browser.
+   ================================================================ */
+
+const SYSTEM_PROMPT = `You are a data-extraction assistant for a restaurant ordering app.
+Your sole job is to read the provided menu document or image and produce a
+JavaScript data file. Output ONLY valid JavaScript — no prose, no markdown
+fences, no commentary before or after the code block.`;
+
+const USER_PROMPT = `Extract every menu item from the attached menu and output a complete
+const MENU_DATA constant in exactly this format:
+
+const MENU_DATA = {
+  "categories": [
+    {
+      "id": "category-slug",
+      "name": "Category Name",
+      "items": [
+        {
+          "id": "item-slug",
+          "name": "Item Name",
+          "price": 00.00,
+          "description": "One or two sentence description."
+        }
+      ]
+    }
+  ]
+};
+
+Rules:
+- id values must be lowercase, hyphen-separated slugs (e.g. "grilled-chicken").
+- price must be a plain number — no currency symbols, no quotes.
+- Keep descriptions concise (1–2 sentences) and factual.
+- Group items into sensible categories that reflect the original menu.
+- If a price is not shown, omit that item.
+- Do NOT add any code outside the const MENU_DATA = { ... }; block.
+- The output must be immediately valid JavaScript.
+
+Now extract the menu:`;
+
+/* ── State ──────────────────────────────────────────────────── */
+let selectedFile = null;
+
+/* ── Init ───────────────────────────────────────────────────── */
+(function init() {
+  // Restore saved API key
+  const saved = localStorage.getItem('wl_api_key');
+  if (saved) {
+    document.getElementById('api-key-input').value = saved;
+    document.getElementById('key-saved').style.display = 'block';
+  }
+  // Show existing import if present
+  const existing = localStorage.getItem('wl_imported_menu');
+  if (existing) {
+    try {
+      const data = JSON.parse(existing);
+      const n = (data.categories || []).length;
+      document.getElementById('imported-count').textContent = n + ' categor' + (n === 1 ? 'y' : 'ies');
+      document.getElementById('imported-notice').style.display = 'flex';
+    } catch (_) {}
+  }
+})();
+
+/* ── API key ────────────────────────────────────────────────── */
+function saveKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val) { showError('Please enter your API key.'); return; }
+  localStorage.setItem('wl_api_key', val);
+  document.getElementById('key-saved').style.display = 'block';
+  hideError();
+}
+
+/* ── File handling ──────────────────────────────────────────── */
+function onDragOver(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.add('drag-over');
+}
+function onDragLeave(e) {
+  document.getElementById('drop-zone').classList.remove('drag-over');
+}
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) setFile(file);
+}
+function onFileChange(e) {
+  const file = e.target.files[0];
+  if (file) setFile(file);
+}
+function setFile(file) {
+  selectedFile = file;
+  const nameEl = document.getElementById('file-name');
+  nameEl.textContent = '📎 ' + file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
+  nameEl.style.display = 'block';
+  document.getElementById('extract-btn').disabled = false;
+  hideError();
+}
+
+/* ── Clear imported ─────────────────────────────────────────── */
+function clearImported() {
+  localStorage.removeItem('wl_imported_menu');
+  document.getElementById('imported-notice').style.display = 'none';
+}
+
+/* ── Reset form ─────────────────────────────────────────────── */
+function resetForm() {
+  selectedFile = null;
+  document.getElementById('file-input').value = '';
+  document.getElementById('file-name').style.display = 'none';
+  document.getElementById('extract-btn').disabled = true;
+  document.getElementById('success-section').style.display = 'none';
+  document.getElementById('progress-section').style.display = 'none';
+  document.getElementById('output-box').textContent = '';
+  hideError();
+}
+
+/* ── Error helpers ──────────────────────────────────────────── */
+function showError(msg) {
+  const el = document.getElementById('error-box');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function hideError() {
+  document.getElementById('error-box').style.display = 'none';
+}
+
+/* ── File → base64 ──────────────────────────────────────────── */
+function readAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      // Strip "data:<type>;base64," prefix
+      const result = e.target.result;
+      resolve(result.split(',')[1]);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function readAsText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
+}
+
+/* ── Build content blocks ───────────────────────────────────── */
+async function buildContentBlocks(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  const IMAGE_TYPES = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif' };
+
+  if (ext === 'pdf') {
+    const b64 = await readAsBase64(file);
+    return [{ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: b64 } }];
+  }
+  if (IMAGE_TYPES[ext]) {
+    const b64 = await readAsBase64(file);
+    return [{ type: 'image', source: { type: 'base64', media_type: IMAGE_TYPES[ext], data: b64 } }];
+  }
+  // text / md / csv / etc.
+  const text = await readAsText(file);
+  return [{ type: 'text', text }];
+}
+
+/* ── Main extraction ────────────────────────────────────────── */
+async function runExtraction() {
+  hideError();
+
+  const apiKey = (document.getElementById('api-key-input').value.trim()) ||
+                 (localStorage.getItem('wl_api_key') || '');
+  if (!apiKey) { showError('Please enter and save your Anthropic API key first.'); return; }
+  if (!selectedFile) { showError('Please choose a file first.'); return; }
+
+  // Save key
+  localStorage.setItem('wl_api_key', apiKey);
+
+  // UI: show progress
+  document.getElementById('extract-btn').disabled = true;
+  document.getElementById('extract-btn').textContent = 'Extracting…';
+  const progressSection = document.getElementById('progress-section');
+  const successSection  = document.getElementById('success-section');
+  const outputBox       = document.getElementById('output-box');
+  const tokenCount      = document.getElementById('token-count');
+  progressSection.style.display = 'block';
+  successSection.style.display  = 'none';
+  outputBox.textContent = '';
+
+  try {
+    // Build content blocks
+    const contentBlocks = await buildContentBlocks(selectedFile);
+
+    // Call Anthropic API with streaming
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-6',
+        max_tokens: 4096,
+        thinking: { type: 'adaptive' },
+        stream: true,
+        system: SYSTEM_PROMPT,
+        messages: [{
+          role: 'user',
+          content: [...contentBlocks, { type: 'text', text: USER_PROMPT }]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ error: { message: response.statusText } }));
+      throw new Error((err.error && err.error.message) || 'API error ' + response.status);
+    }
+
+    // Parse SSE stream
+    const reader  = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer    = '';
+    let fullText  = '';
+    let currentEvent = '';
+    let currentBlockIsText = false;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop(); // keep last incomplete line
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('event:')) {
+          currentEvent = trimmed.slice(6).trim();
+        } else if (trimmed.startsWith('data:')) {
+          const jsonStr = trimmed.slice(5).trim();
+          if (jsonStr === '[DONE]') continue;
+          try {
+            const data = JSON.parse(jsonStr);
+            if (currentEvent === 'content_block_start') {
+              currentBlockIsText = (data.content_block && data.content_block.type === 'text');
+            } else if (currentEvent === 'content_block_delta' && currentBlockIsText) {
+              if (data.delta && data.delta.type === 'text_delta') {
+                fullText += data.delta.text;
+                outputBox.textContent = fullText;
+                outputBox.scrollTop = outputBox.scrollHeight;
+                tokenCount.textContent = fullText.length;
+              }
+            }
+          } catch (_) {}
+        }
+      }
+    }
+
+    // Strip markdown fences if present
+    let js = fullText.trim();
+    const fenceMatch = js.match(/```(?:javascript|js)?\s*([\s\S]*?)```/);
+    if (fenceMatch) js = fenceMatch[1].trim();
+
+    if (!js.includes('MENU_DATA')) {
+      throw new Error('Claude did not return a valid MENU_DATA constant. Try again or use a clearer menu file.');
+    }
+
+    // Parse the MENU_DATA object
+    let menuObj;
+    try {
+      menuObj = new Function(js + '; return MENU_DATA;')();
+    } catch (parseErr) {
+      throw new Error('Could not parse extracted menu: ' + parseErr.message);
+    }
+
+    if (!menuObj || !Array.isArray(menuObj.categories)) {
+      throw new Error('Extracted data is missing categories. Try a clearer menu image or PDF.');
+    }
+
+    // Save to localStorage
+    localStorage.setItem('wl_imported_menu', JSON.stringify(menuObj));
+
+    // Show success
+    const total = menuObj.categories.reduce((s, c) => s + c.items.length, 0);
+    progressSection.style.display = 'none';
+    successSection.style.display  = 'block';
+    document.getElementById('success-msg').textContent =
+      menuObj.categories.length + ' categories · ' + total + ' items extracted and saved.';
+
+    // Update notice
+    document.getElementById('imported-count').textContent =
+      menuObj.categories.length + ' categor' + (menuObj.categories.length === 1 ? 'y' : 'ies');
+    document.getElementById('imported-notice').style.display = 'flex';
+
+  } catch (err) {
+    showError('Error: ' + err.message);
+    document.getElementById('extract-btn').disabled = false;
+    document.getElementById('extract-btn').textContent = 'Extract Menu with Claude';
+  }
+}
+</script>
+
+</body>
+</html>

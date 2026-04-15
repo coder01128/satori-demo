@@ -9,6 +9,15 @@
 
 /* ── Config helpers ─────────────────────────────────────────── */
 const CFG = (typeof CONFIG !== 'undefined') ? CONFIG : {};
+
+/* ── Menu data — use admin-imported version if available ─────── */
+const ACTIVE_MENU = (function () {
+  try {
+    const s = localStorage.getItem('wl_imported_menu');
+    if (s) return JSON.parse(s);
+  } catch (_) {}
+  return (typeof MENU_DATA !== 'undefined') ? MENU_DATA : { categories: [] };
+})();
 const CART_KEY    = CFG.storageKey || 'restaurant_cart';
 const ORDER_PRE   = CFG.orderPrefix || 'ORD';
 const WA_NUMBER   = CFG.whatsapp   || '';
@@ -85,7 +94,7 @@ const CAT_GRADIENTS = {
 };
 
 function renderMenu() {
-  const categories = MENU_DATA.categories;
+  const categories = ACTIVE_MENU.categories;
 
   // Category tabs
   elCategoryTabs.innerHTML = '';
@@ -175,7 +184,7 @@ function refreshItemControl(itemId) {
    CART STATE
    ───────────────────────────────────────────────────────────── */
 function findItem(itemId) {
-  for (const cat of MENU_DATA.categories) {
+  for (const cat of ACTIVE_MENU.categories) {
     const item = cat.items.find(i => i.id === itemId);
     if (item) return item;
   }
@@ -183,7 +192,7 @@ function findItem(itemId) {
 }
 
 function findCategory(itemId) {
-  for (const cat of MENU_DATA.categories) {
+  for (const cat of ACTIVE_MENU.categories) {
     if (cat.items.some(i => i.id === itemId)) return cat;
   }
   return null;
