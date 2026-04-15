@@ -1332,6 +1332,7 @@ input, textarea, select {
   flex-wrap: wrap;
   gap: 0.75rem;
   align-items: center;
+  justify-content: center;
 }
 
 /* WhatsApp button */
