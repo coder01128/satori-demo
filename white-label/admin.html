@@ -564,8 +564,7 @@ async function runExtraction() {
       },
       body: JSON.stringify({
         model: 'claude-opus-4-6',
-        max_tokens: 4096,
-        thinking: { type: 'adaptive' },
+        max_tokens: 8192,
         stream: true,
         system: SYSTEM_PROMPT,
         messages: [{
