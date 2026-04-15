@@ -1325,9 +1325,10 @@ input, textarea, select {
 
 .contact-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 0.75rem;
-  align-items: stretch; /* full width on mobile */
+  align-items: center;
 }
 
 /* WhatsApp button */
@@ -1370,6 +1371,37 @@ input, textarea, select {
 }
 
 .whatsapp-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Instagram button */
+.btn-instagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 14px rgba(188, 24, 136, 0.35);
+}
+
+.btn-instagram:hover {
+  opacity: 0.88;
+  box-shadow: 0 6px 20px rgba(188, 24, 136, 0.5);
+}
+
+.instagram-icon {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
@@ -1797,8 +1829,8 @@ input, textarea, select {
   }
 
   .contact-actions {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 
   .btn-whatsapp--full {

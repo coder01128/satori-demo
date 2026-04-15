@@ -3,7 +3,7 @@
    Cache-first strategy for app shell. Offline-capable.
    ============================================================= */
 
-const CACHE_NAME = 'satori-v14';
+const CACHE_NAME = 'satori-v15';
 
 const SHELL = [
   './index.html',
